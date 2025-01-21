@@ -42,63 +42,47 @@ def get_icd10_display(code, lang):
     response = r.json()
     return response['title']['@value']
 
-
-def get_code_display(display, system, code, lang):
-    # ICD-10
+def get_snomed_display(code, lang):
+    uri = 'https://browser.ihtsdotools.org/snowstorm/snomed-ct/browser/MAIN/SNOMEDCT-CA/2021-09-30/concepts/' + code # access snomed API
+    sct_headers['Accept-Language'] = lang # Set header field to desired language
+    r = requests.get(uri, headers=sct_headers, verify=False) # make request
+    print(r.text)
+    if 'Concept not found' in r.text:
+        print("WARNING: No response received for code",code,"in",lang)
+        return '' # Return empty string if no reponse received found       
     
-    if ('icd-10' in system):
-        # r = requests.post(token_endpoint, data=payload, verify=False).json()
+    response = r.json()
+    return response['pt']['term'].replace("'","''") if lang in response['pt']['lang'] else ''
 
-        # print(r)
-        # token = r['access_token']
-       
-        # uri = f'https://id.who.int/icd/release/10/2008/{code}'
-# response = requests.get(uri, headers=icd_headers, verify=False)
-       
-        # uri = f'https://id.who.int/icd/release/10/2008/{code}'
-        # response = requests.get(uri, headers=icd_headers, verify=False)
-        # print(response.text)
-       
-        print("hi")
-        
-        
+def get_umls_display(code, lang):
+    base_uri = "https://uts-ws.nlm.nih.gov/rest"
+    endpoint = "/content/current/CUI/" + code + "/atoms"
+    # query = {'ticket':AuthClient.getst(tgt)}
+    query = {'apiKey':umls_api_key}
+    # If not english, must search for the code's atoms that have the given language
+    # Can add more statements if other languages included
+    if "fr" in lang.lower():
+        endpoint = endpoint + "?language=FRE"
+    elif "en" in lang.lower():
+        endpoint = endpoint+"?language=ENG"
 
+    print(base_uri+endpoint)
+    r = requests.get(base_uri+endpoint, params=query,verify=False)
+    print(r.text)
+    
+    if ('No results' in r.text):
+        print("WARNING: No response received for code",code,"in",lang)
+        return '' # Return empty string if no reponse received found   
 
-    elif ('snomed' in system):
-        uri = 'https://browser.ihtsdotools.org/snowstorm/snomed-ct/MAIN%2FSNOMEDCT-CA%2F2021-09-30/concepts/' + code # access snomed API
-        sct_headers['Accept-Language'] = lang # Set header field to desired language
-        r = requests.get(uri, headers=sct_headers, verify=False) # make request
-        print(r.text)
-        if 'Concept not found' in r.text:
-            return display if 'en' in lang else '' # Return the display coded in mCODE if lang set to english          
-        
-        response = r.json()
-        print(response)
-        return response['pt']['term'].replace("'","''") if lang in response['pt']['lang'] else ''
+    response = r.json()
+    return response['result'][0]['name']   
 
 
-    elif ('umls' in system):
-        base_uri = "https://uts-ws.nlm.nih.gov/rest"
-        endpoint = "/content/current/CUI/" + code
-        query = {'ticket':AuthClient.getst(tgt)}
-
-        # If not english, must search for the code's atoms that have the given language
-        # Can add more statements if other languages included
-        if "fr" in lang:
-            endpoint = endpoint + "/atoms?language=FRE"
-
-        r = requests.get(base_uri+endpoint, params=query,verify=False)
-        print(r.text)
-        
-        if ('No results' in r.text):
-            return display if 'en' in lang else '' # Return the display coded in mCODE if lang set to english
-        
-        response = r.json()
-        return response['result']['name'] if "en" in lang else response['result'][0]['name']           
                 
 
-print("Results",get_code_display('test displace', 'icd-10',"C77.0", 'fr'))
-print("icd10:",get_icd10_display("C77.0",'fr'))
+# print("icd10:",get_icd10_display("C77.0",'fr'))
+# print("smoned:",get_snomed_display("774007",'fr'))
+print("umls:",get_umls_display("C0155502",'en'))
 # # print(get_code_display('test displace', 'umls', 'S0011232', 'fr'))
 # # # 
 # # print(get_code_display('test displace', 'snomed', '774007', 'fr'))
