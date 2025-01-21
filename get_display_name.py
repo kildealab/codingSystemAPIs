@@ -2,8 +2,8 @@ from Authentication import *
 from config import *
 import requests
 from requests.packages.urllib3.exceptions import InsecureRequestWarning
-# requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
-
+requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
+# NOTE: for production, you should probably not disable these warnings
 
 # ICD-10 Authentication
 r = requests.post(token_endpoint, data=payload, verify=False).json()
@@ -77,9 +77,3 @@ def get_umls_display(code, lang):
     response = r.json()
     return response['result'][0]['name']   
 
-
-                
-
-print("icd10:",get_icd10_display("C77.0",'fr'))
-print("smoned:",get_snomed_display("774007",'fr'))
-print("umls:",get_umls_display("C0155502",'FRE')) # Languages allowed for UMLS:“ENG”,“FRE”,“SPA”,“GER”,“DUT”,“JPN”, etc
