@@ -66,9 +66,7 @@ def get_umls_display(code, lang):
     elif "en" in lang.lower():
         endpoint = endpoint+"?language=ENG"
 
-    print(base_uri+endpoint)
     r = requests.get(base_uri+endpoint, params=query,verify=False)
-    print(r.text)
     
     if ('No results' in r.text):
         print("WARNING: No response received for code",code,"in",lang)
@@ -80,9 +78,6 @@ def get_umls_display(code, lang):
 
                 
 
-# print("icd10:",get_icd10_display("C77.0",'fr'))
-# print("smoned:",get_snomed_display("774007",'fr'))
-print("umls:",get_umls_display("C0155502",'en'))
-# # print(get_code_display('test displace', 'umls', 'S0011232', 'fr'))
-# # # 
-# # print(get_code_display('test displace', 'snomed', '774007', 'fr'))
+print("icd10:",get_icd10_display("C77.0",'fr'))
+print("smoned:",get_snomed_display("774007",'fr'))
+print("umls:",get_umls_display("C0155502",'fr'))
