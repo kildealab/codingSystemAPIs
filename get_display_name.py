@@ -65,6 +65,8 @@ def get_umls_display(code, lang):
         endpoint = endpoint + "?language=FRE"
     elif "en" in lang.lower():
         endpoint = endpoint+"?language=ENG"
+    else:
+        endpoint = endpoint+"?language="+lang
 
     r = requests.get(base_uri+endpoint, params=query,verify=False)
     
@@ -80,4 +82,4 @@ def get_umls_display(code, lang):
 
 print("icd10:",get_icd10_display("C77.0",'fr'))
 print("smoned:",get_snomed_display("774007",'fr'))
-print("umls:",get_umls_display("C0155502",'fr'))
+print("umls:",get_umls_display("C0155502",'FRE')) # Languages allowed for UMLS:“ENG”,“FRE”,“SPA”,“GER”,“DUT”,“JPN”, etc
