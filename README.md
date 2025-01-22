@@ -72,7 +72,8 @@ We welcome contributions! If you are interested in contributing, please fork the
 4. Push your branch: `git push origin feature-name`
 5. Create a pull request.
 
-## Lincense
+## Lincence
+This project is licensed under the MIT License - see the LICENSE file for details.
 
 ## Contact
 For support or questions, please email Kayla O'Sullivan-Steben at kayla.osullivan-steben@mail.mcgill.ca.
