@@ -1,4 +1,6 @@
-# TAKEN FROM https://github.com/HHS/uts-rest-api/blob/master/samples/python/Authentication.py
+# This code was taken from the following source: https://github.com/HHS/uts-rest-api/blob/master/samples/python/Authentication.py
+# The original code is part of the UMLS REST API samples provided by HHS.
+
 import requests
 from lxml.html import fromstring
 
