@@ -28,7 +28,7 @@ Therefore, this tool was created to facilitate the retrieval of medical code dis
 ### Dependencies
 * Python >= 3.8
 * lxml >= 5.3.0
-* 
+* requests >= 2.32.2
 ### API Access Credentials
 * **ICD-10**: Register at https://icd.who.int/icdapi (see "API ACCESS") to get an access token.
 * **UMLS**: Register at https://documentation.uts.nlm.nih.gov/rest/home.html (click "Get Your API Key") to get an API key.
@@ -55,7 +55,11 @@ Therefore, this tool was created to facilitate the retrieval of medical code dis
     get_snomed_display(code="774007", lang='fr')) # SNOMED-CT Example
     get_umls_display(code="C0155502", lang='FRE')) # UMLS Example
     ```
-
+3. **Running the example**: If you want to verify that your configuration variables have been set up properly, you can directly run `Example.py`:
+   ```
+   python Example.py
+   ```
+   Note that if you want to use ICD-11 instead of ICD-10, you will have to uncomment the final example and change the version in `config.py`.
 ## Contributing
 We welcome contributions! If you are interested in contributing, please fork the repository and create a pull request with your changes.
 1. Fork the repository.
