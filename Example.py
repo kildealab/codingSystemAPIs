@@ -1,3 +1,8 @@
+# Filename: Example.py
+# Author: Kayla O'Sullivan-Steben
+# Date Created: January 21, 2025
+# Description: Provides examples using the code in code_api_requests. 
+
 from code_api_requests import get_icd_display, get_snomed_display, get_umls_display
     
 # Example ICD 10
@@ -6,17 +11,18 @@ try:
 	code = "C77.0"
 	language = 'fr'
 	print("ICD:",get_icd_display(code, language))
+	get_icd_display(code,language)
 except Exception as e:
-	print("Error with ICD-11",e)
+	print("Error with ICD-10",e)
 
 
 # Example SNOMED
-# try:
-# 	code = "774007"
-# 	language = 'fr'
-# 	print("smoned:",get_snomed_display(code, language))
-# except Exception as e:
-# 	print("Error with SNOMED-CT",e)
+try:
+	code = "774007"
+	language = 'fr'
+	print("smoned:",get_snomed_display(code, language))
+except Exception as e:
+	print("Error with SNOMED-CT",e)
 
 # Example UMLS
 try:
@@ -27,12 +33,12 @@ except Exception as e:
 	print("Error with UMLS:", e)
 
 
-# Example ICD-11, must set icd_version = 'entity' in config.py, then uncomment     
-# Current languages allowed in latest version 2024-01: ar, cs, en, es, fr, pt, ru, tr, uz, zh
+# Example ICD-11
+# NOTE: must set icd_version = 'entity' in config.py, then uncomment below 
  
 # try:
 # 	code = "257068234"#"C77.0"
-# 	language = 'es'
+# 	language = 'es' # Current languages allowed in latest version 2024-01: ar, cs, en, es, fr, pt, ru, tr, uz, zh
 # 	print("ICD:",get_icd10_display(code, language))
 # except Exception as e:
 # 	print("Error with ICD-11",e)

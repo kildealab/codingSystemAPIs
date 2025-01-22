@@ -1,3 +1,9 @@
+# Filename: code_api_requests.py
+# Author: Kayla O'Sullivan-Steben
+# Date Created: January 21, 2025
+# Description: Contains functions to make API calls to ICD, SNOMED, and UMLS, to get code display names in different languages. 
+
+
 from Authentication import *
 from config import *
 import requests
@@ -15,10 +21,21 @@ icd_headers = None
 umls_auth_client = None 
 umls_tgt = None
 
+# SNOWMED Header
+sct_headers = {'Authorization':  'Basic', 
+           'Accept': 'application/json', 
+           'Accept-Language': 'en',
+        'API-Version': 'v2',
+        'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Mobile Safari/537.36 Edg/97.0.1072.62'}
+
 
 # ICD Authentication
 def authenticate_icd():
+    '''
+    authenticate_icd    Authenticates with the ICD API and sets global variables for tokens and headers, if not already done.
+    '''
     global icd_token, icd_headers
+    
     if icd_token == None:
         # Token
         r = requests.post(token_endpoint, data=payload, verify=False).json()
@@ -32,24 +49,29 @@ def authenticate_icd():
             'API-Version': 'v2'
         }
 
+
 # UMLS Authentication
 def authenticate_umls():
+    '''
+    authenticate_umls  Authenticates with the UMLS API and sets global variables for authentication client and ticket, if not done.
+    '''
     global umls_auth_client, umls_tgt
     if umls_auth_client == None:
         AuthClient = Authentication(umls_api_key) 
         tgt = AuthClient.gettgt()
 
 
-
-
-sct_headers = {'Authorization':  'Basic', 
-           'Accept': 'application/json', 
-           'Accept-Language': 'en',
-        'API-Version': 'v2',
-        'User-Agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Mobile Safari/537.36 Edg/97.0.1072.62'}
-
-
 def get_icd_display(code, lang):
+
+    '''
+    get_icd_display     Retrieves the display name for an ICD code in the specified language.
+    
+    :PARAM code (str): The ICD code to look up.
+    :PARAM lang (str): The language code for the desired language.
+    
+    :Returns: The display name of the ICD code in the specified language, or an empty string if not found.
+    
+    '''
     # Note: for ICD language codes supported: https://icd.who.int/icdapi/docs2/SupportedClassifications/
     authenticate_icd()
     uri = 'https://id.who.int/icd/'+icd_version+'/' + code  # access ICD API --> can update version here
@@ -64,6 +86,14 @@ def get_icd_display(code, lang):
     return response['title']['@value']
 
 def get_snomed_display(code, lang):
+    '''
+    get_snomed_display  Retrieves the display name for a SNOMED code in the specified language.
+    
+    :PARAM code (str): The SNOMED code to look up.
+    "PARAM lang (str): The language code for the desired language.
+    
+    :Returns: The display name of the SNOMED code in the specified language, or an empty string if not found.
+    '''
     uri = 'https://browser.ihtsdotools.org/snowstorm/snomed-ct/browser/'+snomed_edition+'/'+snomed_version+'/concepts/' + code # access snomed API
     sct_headers['Accept-Language'] = lang # Set header field to desired language
     r = requests.get(uri, headers=sct_headers, verify=False) # make request
@@ -76,6 +106,14 @@ def get_snomed_display(code, lang):
     return response['pt']['term'].replace("'","''") if lang in response['pt']['lang'] else ''
 
 def get_umls_display(code, lang):
+    '''
+    get_umls_display    Retrieves the display name for a UMLS code in the specified language.
+    
+    :PARAM code (str): The UMLS code to look up.
+    :PARAM lang (str): The language code for the desired language.
+    
+    :Returns: The display name of the UMLS code in the specified language, or an empty string if not found.
+    '''
     authenticate_umls()
     base_uri = "https://uts-ws.nlm.nih.gov/rest"
     endpoint = "/content/" + umls_version + "/CUI/" + code + "/atoms"
