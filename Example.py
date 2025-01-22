@@ -10,8 +10,8 @@ from code_api_requests import get_icd_display, get_snomed_display, get_umls_disp
 try:
 	code = "C77.0"
 	language = 'fr'
-	print("ICD:",get_icd_display(code, language))
-	get_icd_display(code,language)
+	print("ICD -",code,"=",get_icd_display(code, language))
+	
 except Exception as e:
 	print("Error with ICD-10",e)
 
@@ -19,8 +19,8 @@ except Exception as e:
 # Example SNOMED
 try:
 	code = "774007"
-	language = 'fr'
-	print("smoned:",get_snomed_display(code, language))
+	language = 'fr' # For Canadian SNOMED, languages are 'fr' and 'en'
+	print("SNOMED-CT -",code,"=",get_snomed_display(code, language))
 except Exception as e:
 	print("Error with SNOMED-CT",e)
 
@@ -28,7 +28,7 @@ except Exception as e:
 try:
 	code = "C0155502"
 	language = 'FRE'# Languages allowed for UMLS:“ENG”,“FRE”,“SPA”,“GER”,“DUT”,“JPN”, etc
-	print("UMLS:",get_umls_display(code, language)) 
+	print("UMLS - ",code,"=",get_umls_display(code, language)) 
 except Exception as e:
 	print("Error with UMLS:", e)
 

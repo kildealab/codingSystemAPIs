@@ -97,7 +97,7 @@ def get_snomed_display(code, lang):
     uri = 'https://browser.ihtsdotools.org/snowstorm/snomed-ct/browser/'+snomed_edition+'/'+snomed_version+'/concepts/' + code # access snomed API
     sct_headers['Accept-Language'] = lang # Set header field to desired language
     r = requests.get(uri, headers=sct_headers, verify=False) # make request
-    print(r.text)
+
     if 'Concept not found' in r.text:
         print("WARNING: No response received for code",code,"in",lang)
         return '' # Return empty string if no reponse received found       
