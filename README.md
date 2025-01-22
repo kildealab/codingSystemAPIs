@@ -47,6 +47,7 @@ Therefore, this tool was created to facilitate the retrieval of medical code dis
 1. **Set up configuration**: Update the `config.py` file with your API credentials. Specifically, you will need to change:
     * For ICD: `client_id` and `client_secret`
     * For UMLS: `umls_api_key`
+    * Coding system versions (optional): `icd_version`, `umls_version`, `snomed_version`
 2. **Retrieve coding names**: Import `code_api_requests` and use the following function calls in your code to retrieve the display name in any language from the code. An example usage is shown in `Example.py`.
     ```
     from code_api_requests import get_icd10_display, get_snomed_display, get_umls_display
