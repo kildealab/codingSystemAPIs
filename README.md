@@ -18,11 +18,11 @@ However, medical records typically only store code display names in a single lan
 Therefore, this tool was created to facilitate the retrieval of medical code display names in any language using the coding systems' APIs. 
 
 ## Files
-* `get_display_name.py`: Contains functions to retrieve display names for medical codes from ICD-10, SNOMED CT, and UMLS APIs.
+* `code_api_requests.py`: Contains functions to retrieve display names for medical codes from ICD-10, SNOMED CT, and UMLS APIs.
 * `Authentication.py`: Handles UMLS API authentication using an API key.
 * `config.py`: Contains configuration variables for accessing the ICD-10 and UMLS APIs.
 * `requirements.txt`: The required python packages.
-* `Example.py`: Demonstrates how to use the functions in `get_display_name.py`.
+* `Example.py`: Demonstrates how to use the functions in `code_api_requests.py`.
 
 ## Prerequesites
 ### Dependencies
@@ -47,11 +47,11 @@ Therefore, this tool was created to facilitate the retrieval of medical code dis
 1. **Set up configuration**: Update the `config.py` file with your API credentials. Specifically, you will need to change:
     * For ICD: `client_id` and `client_secret`
     * For UMLS: `umls_api_key`
-2. **Retrive coding names**: Import `get_display_name` and use the following function calls in your code to retrieve the display name in any language from the code. An example usage is shown in `Example.py`.
+2. **Retrieve coding names**: Import `code_api_requests` and use the following function calls in your code to retrieve the display name in any language from the code. An example usage is shown in `Example.py`.
     ```
-    from get_display_name import get_icd10_display, get_snomed_display, get_umls_display
+    from code_api_requests import get_icd10_display, get_snomed_display, get_umls_display
 
-    get_icd10_display(code="C77.0", lang='fr')) # ICD-10 Example
+    get_icd_display(code="C77.0", lang='fr')) # ICD Example
     get_snomed_display(code="774007", lang='fr')) # SNOMED-CT Example
     get_umls_display(code="C0155502", lang='FRE')) # UMLS Example
     ```

@@ -1,4 +1,4 @@
-from get_display_name import get_icd_display, get_snomed_display, get_umls_display
+from code_api_requests import get_icd_display, get_snomed_display, get_umls_display
     
 # Example ICD 10
  

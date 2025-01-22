@@ -6,7 +6,7 @@ requests.packages.urllib3.disable_warnings(InsecureRequestWarning)
 # NOTE: for production, you should probably not disable these warnings
 
 # Global variables to store authentication tokens and headers for API requests 
-# This is done so that they aren't authenticated on import for the cases in which someone only wants to use one of hthem
+# This is done so that they aren't authenticated on import for the cases in which someone only wants to use one of them
 # ICD
 icd_token = None 
 icd_headers = None 
